@@ -37,11 +37,14 @@ DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ### 3. Get your API token
 
 1. Log in to [rewards.cidercade.com](https://rewards.cidercade.com)
-2. Open your browser's developer tools → **Network** tab
-3. Find a request to `loyalty-api.hang.com`
-4. Copy the `Authorization` header value — use only the token part after `Token `
+2. Open developer tools → **Console** tab
+3. Paste and run:
 
-Example: if the header is `Token eyJhbGci...`, put `eyJhbGci...` in `.env`.
+```js
+copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
+```
+
+4. The token is copied to your clipboard, paste it into `.env` as `TOKEN`
 
 > Tokens expire. If runs start failing with auth errors, grab a fresh token from the browser.
 
@@ -82,10 +85,12 @@ Secrets are **not** stored in the workflow file. Add them in GitHub:
 2. **Settings** → **Secrets and variables** → **Actions**
 3. Click **New repository secret** for each:
 
-| Secret name | Value |
-|---|---|
-| `TOKEN` | Your Hang API token (same as local `.env`) |
-| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL |
+
+| Secret name           | Value                                       |
+| --------------------- | ------------------------------------------- |
+| `TOKEN`               | Your token from `.env` (e.g. `eyJhbGci...`) |
+| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL                    |
+
 
 ### 3. Run manually (optional)
 
@@ -106,13 +111,12 @@ GitHub disables scheduled workflows after **60 days** without commits on the rep
 
 **Required setting:** In **Settings** → **Actions** → **General**, set **Workflow permissions** to **Read and write permissions** so the keep-alive job can commit.
 
-You can also run it manually from the Actions tab under **Keep GitHub Actions alive**.
-
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `bun start` | Run all daily tasks |
+
+| Command                           | Description                                  |
+| --------------------------------- | -------------------------------------------- |
+| `bun start`                       | Run all daily tasks                          |
 | `bun run test:wotd-solver <word>` | Test the Wordle solver against a target word |
 
 ## Disclaimer
