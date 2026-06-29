@@ -1,0 +1,18 @@
+{
+  "name": "cidercade-clent",
+  "module": "index.ts",
+  "devDependencies": {
+    "@biomejs/biome": "2.5.1",
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "type": "module",
+  "dependencies": {
+    "@gueripep/wordle-solver": "^2.0.4"
+  }
+}
