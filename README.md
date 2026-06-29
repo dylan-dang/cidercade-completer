@@ -46,7 +46,7 @@ copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
 
 4. The token is copied to your clipboard, paste it into `.env` as `TOKEN`
 
-> Tokens expire. If runs start failing with auth errors, grab a fresh token from the browser.
+> Fresh Tokens are good for about a month. If runs start failing with auth errors, grab a fresh token from the browser.
 
 ### 4. Run locally
 
