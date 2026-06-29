@@ -62,6 +62,8 @@ bun start
 5. Click **Copy Webhook URL**
 6. Paste the URL into `.env` as `DISCORD_WEBHOOK_URL`
 
+<img width="345" height="363" alt="{635EB4BB-D57C-4B37-A06E-965AE5FED35D}" src="https://github.com/user-attachments/assets/a2ca63b8-8b43-464e-861f-3214000ebeeb" />
+
 If `DISCORD_WEBHOOK_URL` is not set, the script still runs but skips the notification.
 
 ## Using GitHub Actions (daily cron)
