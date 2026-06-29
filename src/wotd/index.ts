@@ -31,9 +31,12 @@ export async function solveWOTD() {
     !wotd.solved &&
     wotd.attempts.some((attempt) => attempt.letter_deltas === null)
   ) {
-    wotd = await postEndUsers<WOTDResponse>("wotd/attempt", {
-      guess: getBestGuess(wotd.attempts),
-    });
+    const guess = getBestGuess(wotd.attempts);
+    if (!guess) {
+      throw new Error("Solver could not produce a guess for the remaining words");
+    }
+
+    wotd = await postEndUsers<WOTDResponse>("wotd/attempt", { guess });
   }
 
   return wotd;

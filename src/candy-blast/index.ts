@@ -31,11 +31,18 @@ export type CandyBlastResponse = {
   };
 };
 
-async function fetchCandyBlast() {
-  const { game } = await getEndUsers<CandyBlastResponse>(
+export type CandyBlastGame = CandyBlastResponse["game"];
+
+async function fetchCandyBlast(): Promise<CandyBlastGame> {
+  const response = await getEndUsers<CandyBlastResponse>(
     "market-js-games/candy-blast",
   );
-  return game;
+
+  if (!response.game) {
+    throw new Error("Candy Blast response did not include game data");
+  }
+
+  return response.game;
 }
 
 const POLL_INTERVAL_MS = 1000;
@@ -59,7 +66,7 @@ async function pollNewCandyBlastUrl(previousUrl: string) {
   return game;
 }
 
-export async function completeLevels() {
+export async function completeLevels(): Promise<CandyBlastGame> {
   let game = await fetchCandyBlast();
 
   while (!game.completed) {
@@ -90,7 +97,7 @@ export async function completeLevels() {
     });
 
     // simulate game results
-    const score = getRandomScore(5000, 20000);
+    const score = getRandomScore(5000, 25000);
     const game_time = Math.floor(Math.random() * 10_000);
     const time_spent_in_mins = new Date(game_time).toLocaleTimeString("en-US", {
       minute: "2-digit",
@@ -124,6 +131,8 @@ export async function completeLevels() {
 
     game = await pollNewCandyBlastUrl(game.url);
   }
+
+  return game;
 }
 
 /**
