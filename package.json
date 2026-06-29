@@ -1,5 +1,5 @@
 {
-  "name": "cidercade-clent",
+  "name": "cidercade-completer",
   "module": "index.ts",
   "devDependencies": {
     "@biomejs/biome": "2.5.1",
