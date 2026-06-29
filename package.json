@@ -12,5 +12,8 @@
     "start": "bun run src/index.ts",
     "test:wotd-solver": "bun run scripts/test-wotd-solver.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "egoroof-blowfish": "^4.0.2"
+  }
 }

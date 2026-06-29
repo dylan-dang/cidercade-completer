@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "cidercade-clent",
+      "dependencies": {
+        "egoroof-blowfish": "^4.0.2",
+      },
       "devDependencies": {
         "@biomejs/biome": "2.5.1",
         "@types/bun": "latest",
@@ -37,6 +40,8 @@
     "@types/node": ["@types/node@26.0.1", "", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw=="],
 
     "bun-types": ["bun-types@1.3.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-4N0ig0fEomHt5R0KCFWjovxow98rIoRwKolrYdCcknNwMekCXRnWEUvgu5soYV8QXtVsrUD8B95MBOZGPvr6KQ=="],
+
+    "egoroof-blowfish": ["egoroof-blowfish@4.0.2", "", {}, "sha512-cpx71NSHTItYMJljgOh9DQdufFPfI3dIjIav/WSkvwqELZQrO9rxcVLPjubApjnj3ROqBYMPUP22rPjNkqrwqA=="],
 
     "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
 

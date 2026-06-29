@@ -19,7 +19,7 @@ export type WOTDResponse = {
   period: string;
 };
 
-export async function solve() {
+export async function solveWOTD() {
   let wotd = await postEndUsers<WOTDResponse>("wotd");
 
   // check in if attempts are locked

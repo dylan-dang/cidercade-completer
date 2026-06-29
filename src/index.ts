@@ -1,3 +1,5 @@
+import { solveWOTD } from "./wotd";
+
 const Authorization = `Token ${process.env.TOKEN}`;
 
 const headers = {
@@ -13,17 +15,32 @@ const headers = {
 
 const BASE_URL = "https://loyalty-api.hang.com/api/v2/end-users/";
 
-export async function postEndUsers<T = unknown>(
+export async function fetchEndUsers<T = unknown>(
+  method: "POST" | "GET",
   path: string,
   body?: unknown,
 ): Promise<T> {
-  const url = new URL(path, BASE_URL).toString();
-  const res = await fetch(url, {
+  const res = await fetch(new URL(path, BASE_URL), {
     credentials: "include",
     headers,
-    method: "POST",
+    method,
     mode: "cors",
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
   });
   return (await res.json()) as T;
 }
+
+export async function postEndUsers<T = unknown>(path: string, body?: unknown) {
+  return fetchEndUsers<T>("POST", path, body);
+}
+
+export async function getEndUsers<T = unknown>(path: string) {
+  return fetchEndUsers<T>("GET", path);
+}
+
+async function main() {
+  const guesses = await solveWOTD();
+  await completeLevels();
+}
+
+await main();
