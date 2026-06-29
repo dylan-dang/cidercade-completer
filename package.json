@@ -5,14 +5,12 @@
     "@biomejs/biome": "2.5.1",
     "@types/bun": "latest"
   },
-  "scripts": {
-    "start": "bun run index.ts"
-  },
   "peerDependencies": {
     "typescript": "^5"
   },
-  "type": "module",
-  "dependencies": {
-    "@gueripep/wordle-solver": "^2.0.4"
-  }
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "test:wotd-solver": "bun run scripts/test-wotd-solver.ts"
+  },
+  "type": "module"
 }

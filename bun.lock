@@ -4,9 +4,6 @@
   "workspaces": {
     "": {
       "name": "cidercade-clent",
-      "dependencies": {
-        "@gueripep/wordle-solver": "^2.0.4",
-      },
       "devDependencies": {
         "@biomejs/biome": "2.5.1",
         "@types/bun": "latest",
@@ -34,8 +31,6 @@
     "@biomejs/cli-win32-arm64": ["@biomejs/cli-win32-arm64@2.5.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-zgXnKNgWPC4iPF7Y1lR3STUeCUuZRpD6IiOrC7TZTlh0Lx6FiVUT05myuMQHQ9D+1cc7uyMldi4forE6lp0ivQ=="],
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.5.1", "", { "os": "win32", "cpu": "x64" }, "sha512-6uxpR9hvaglANkZemeSiN/FhYgkGasrEGn267eXIWvjrjJ2LhDlk251IhjVJq6MXzkV2/bcXwLwSroLyPtqRZg=="],
-
-    "@gueripep/wordle-solver": ["@gueripep/wordle-solver@2.0.4", "", {}, "sha512-NznFJs47/uThVPz+tYG8Iak4e1N8J1+pcMMMMMNwQ0YmVu4irO1OOgmFLDPXpWN1X1bbh8bPeMLwFhlh6qtYww=="],
 
     "@types/bun": ["@types/bun@1.3.14", "", { "dependencies": { "bun-types": "1.3.14" } }, "sha512-h1hFqFVcvAvD9j9K7ZW7vd82aSA+rTdznZa+5bwvCwqSB1jmmfLcbIWhOLx1/+boy/xmjgCs/OMUL8hRJSmnPw=="],
 
