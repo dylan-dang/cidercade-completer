@@ -1,12 +1,8 @@
 import { completeLevels } from "./candy-blast";
 import { postRunSummary, type TaskOutcome } from "./discord";
-import {
-  countCompletedTasks,
-  formatLootRewardSummary,
-  openLootBoxes,
-  type LootBoxRewardResponse,
-} from "./loot-box";
+import { type LootBoxRewardResponse, redeemAllLootBoxes } from "./loot-box";
 import { solveWOTD } from "./wotd";
+
 const Authorization = `Token ${process.env.TOKEN}`;
 
 const headers = {
@@ -119,6 +115,7 @@ async function runTask<T>(
 }
 
 const LOOT_BOX_PATH = "loot-boxes/3a623991-6a4e-448e-9a11-40cc53e3b9fb/open";
+const TASK_COMPLETION_DELAY_MS = 1500;
 
 async function main() {
   if (!process.env.TOKEN) {
@@ -128,22 +125,16 @@ async function main() {
   const wotd = await runTask("Word of the Day", solveWOTD);
   const candyBlast = await runTask("Candy Blast", completeLevels);
 
-  const completedTaskCount = countCompletedTasks(wotd, candyBlast);
-  let lootSummary = "";
+  await Bun.sleep(TASK_COMPLETION_DELAY_MS);
 
-  if (completedTaskCount > 0) {
-    try {
-      const lootOutcomes = await openLootBoxes(completedTaskCount, () =>
-        postEndUsers<LootBoxRewardResponse>(LOOT_BOX_PATH),
-      );
-      lootSummary = formatLootRewardSummary(lootOutcomes);
-    } catch (error) {
-      console.error(`[Loot boxes] ${formatError(error)}`);
-    }
-  }
+  const lootBoxes = await runTask("Loot boxes", () =>
+    redeemAllLootBoxes(() =>
+      postEndUsers<LootBoxRewardResponse>(LOOT_BOX_PATH),
+    ),
+  );
 
   try {
-    await postRunSummary(wotd, candyBlast, lootSummary);
+    await postRunSummary(wotd, candyBlast, lootBoxes);
   } catch (error) {
     console.error(`Discord notification failed: ${formatError(error)}`);
   }

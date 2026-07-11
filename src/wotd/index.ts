@@ -1,6 +1,6 @@
 import { postEndUsers } from "..";
+import { type GameResult, markAlreadyCompleted } from "../discord";
 import { getBestGuess } from "./solver";
-
 export type LetterDelta = {
   provided: string;
   found_in_word: boolean;
@@ -19,9 +19,12 @@ export type WOTDResponse = {
   period: string;
 };
 
-export async function solveWOTD() {
+export async function solveWOTD(): Promise<GameResult<WOTDResponse>> {
   let wotd = await postEndUsers<WOTDResponse>("wotd");
 
+  if (wotd.solved) {
+    return markAlreadyCompleted(wotd);
+  }
   // check in if attempts are locked
   if (wotd.attempts.some((attempt) => attempt.locked)) {
     await postEndUsers("wotd/check-in", { lat: 30.252545, lng: -97.74123199 });

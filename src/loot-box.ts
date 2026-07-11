@@ -1,7 +1,3 @@
-import type { CandyBlastGame } from "./candy-blast";
-import type { TaskOutcome } from "./discord";
-import type { WOTDResponse } from "./wotd";
-
 const ADMISSION_PIECES_REQUIRED = 4;
 
 type PuzzlePiece = {
@@ -49,36 +45,17 @@ export type LootBoxRewardResponse = {
   rewards: Reward[];
 };
 
-function isWotdCompleted(outcome: TaskOutcome<WOTDResponse>) {
-  return outcome.ok && outcome.data?.solved === true;
-}
-
-function isCandyBlastCompleted(outcome: TaskOutcome<CandyBlastGame>) {
-  return outcome.ok;
-}
-
-export function countCompletedTasks(
-  wotd: TaskOutcome<WOTDResponse>,
-  candyBlast: TaskOutcome<CandyBlastGame>,
-) {
-  let count = 0;
-  if (isWotdCompleted(wotd)) count++;
-  if (isCandyBlastCompleted(candyBlast)) count++;
-  return count;
-}
-
 function isLootBoxUnavailable(error: unknown) {
   const message = error instanceof Error ? error.message : String(error);
   return message.includes("Allocated loot box not found or already redeemed");
 }
 
-export async function openLootBoxes(
-  count: number,
+export async function redeemAllLootBoxes(
   open: () => Promise<LootBoxRewardResponse>,
 ) {
   const outcomes: LootBoxRewardResponse[] = [];
 
-  for (let i = 0; i < count; i++) {
+  while (true) {
     try {
       outcomes.push(await open());
     } catch (error) {

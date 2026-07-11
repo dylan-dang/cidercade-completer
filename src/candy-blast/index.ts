@@ -1,4 +1,5 @@
 import { getEndUsers } from "..";
+import { type GameResult, markAlreadyCompleted } from "../discord";
 import {
   DEFAULT_PROJECT_ID,
   DEFAULT_VALIDATOR_ID,
@@ -66,8 +67,12 @@ async function pollNewCandyBlastUrl(previousUrl: string) {
   return game;
 }
 
-export async function completeLevels(): Promise<CandyBlastGame> {
+export async function completeLevels(): Promise<GameResult<CandyBlastGame>> {
   let game = await fetchCandyBlast();
+
+  if (game.completed) {
+    return markAlreadyCompleted(game);
+  }
 
   while (!game.completed) {
     const url = new URL(game.url);
