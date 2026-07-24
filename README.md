@@ -23,9 +23,8 @@ This is the easiest way to setup cidercade complete and you do not need to insta
 
 ### Step 1: Fork this repo
 
-1. Open this repository on GitHub
-2. Click **Fork** (top right)
-3. Keep the defaults and click **Create fork**
+1. Open the fork page: [Fork this repository](https://github.com/dylan-dang/cidercade-completer/fork)
+2. Keep the defaults and click **Create fork**
 
 You now have your own copy of the project.
 
