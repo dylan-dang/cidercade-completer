@@ -1,123 +1,166 @@
 # Cidercade Completer
 
-Automates daily tasks on [Cidercade Rewards](https://rewards.cidercade.com) and posts a summary to Discord.
+Automatically completes your daily [Cidercade Rewards](https://rewards.cidercade.com) tasks and posts a summary to Discord.
 
-Each run:
+Each day it:
 
-1. **Word of the Day** - solves the daily Wordle puzzle using an entropy-based solver
-2. **Candy Blast** - completes available game levels
-3. **Loot boxes** - opens up to two boxes per day
-4. **Discord** - sends an embed with task completion and rewards
+1. Solves **Word of the Day**
+2. Completes **Candy Blast** levels
+3. Opens available **loot boxes**
+4. Sends a summary to **Discord** (optional)
 
-## Requirements
+---
+
+## Running using GitHub Actions (recommended)
+
+This is the easiest way to setup cidercade complete and you do not need to install anything on your computer. GitHub will run the script for you every day at **9 AM Central** (14:00 UTC).
+
+### What you need
+
+- A free [GitHub](https://github.com) account
+- A [Cidercade Rewards](https://rewards.cidercade.com) account
+- (Optional) A Discord server where you can create a webhook
+
+### Step 1: Fork this repo
+
+1. Open this repository on GitHub
+2. Click **Fork** (top right)
+3. Keep the defaults and click **Create fork**
+
+You now have your own copy of the project.
+
+### Step 2: Get your Cidercade token
+
+1. Log in at [rewards.cidercade.com](https://rewards.cidercade.com)
+2. Press `F12` (or right-click → **Inspect**) to open developer tools
+3. Open the **Console** tab
+4. Paste this and press Enter:
+
+```js
+copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
+```
+
+1. Your token is now on your clipboard, keep it for the next step
+
+> Tokens last about a month. If runs start failing, grab a fresh one the same way.
+
+### Step 3 (Optional): Create a Discord webhook
+
+Skip this if you do not want Discord notifications.
+
+1. Open your Discord server
+2. Go to **Server Settings** → **Integrations** → **Webhooks**
+3. Click **New Webhook**
+4. Name it (e.g. `Cidercade`) and choose a channel
+5. Click **Copy Webhook URL**
+
+### Step 4: Add secrets to your fork
+
+Secrets store your private values so the script can acccess your Cidercade account.
+
+1. On **your fork**, go to **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret** for each row below:
+
+
+| Secret name           | What to paste                                   |
+| --------------------- | ----------------------------------------------- |
+| `TOKEN`               | Your Cidercade token from Step 2                |
+| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL from Step 3 (optional) |
+
+
+### Step 5: Allow the keep-alive workflow to commit
+
+GitHub turns off scheduled workflows after 60 days of no activity. A small “keep-alive” job prevents that, but it needs write access:
+
+1. On your fork: **Settings** → **Actions** → **General**
+2. Under **Workflow permissions**, choose **Read and write permissions**
+3. Click **Save**
+
+### Step 6: Enable Actions on your fork
+
+GitHub disables workflows on forks by default. You must turn them on once, then enable each workflow individually:
+
+1. Open the **Actions** tab on your fork
+2. Click **I understand my workflows, go ahead and enable them**
+3. In the left sidebar, click **Daily Cidercade**, then click **Enable workflow**
+4. Do the same for **Keep GitHub Actions alive**
+
+### Step 7: Run it once to test
+
+1. Still on the **Actions** tab, select **Daily Cidercade** in the left sidebar
+2. Click **Run workflow** → **Run workflow**
+3. Wait for the run to finish
+
+If there is a green check, then the script succeeded.
+Check Discord for the summary embed (if you set up a webhook).
+
+### That’s it
+
+After this, **Daily Cidercade** runs automatically every day. You only need to refresh `TOKEN` when it expires (about once a month).
+
+---
+
+## Troubleshooting
+
+
+| Problem                                | What to try                                                               |
+| -------------------------------------- | ------------------------------------------------------------------------- |
+| Auth / 401 errors                      | Refresh your `TOKEN` secret with a new value from the browser             |
+| No Discord message                     | Confirm `DISCORD_WEBHOOK_URL` is set, or check the Actions log            |
+| Scheduled runs stopped after ~2 months | Confirm **Read and write permissions** (Step 5) so keep-alive can work    |
+
+
+> Free-tier scheduled workflows can be a few minutes late. That is normal.
+
+---
+
+## Running locally
+
+Only needed if you want to develop or run the script on your own machine.
+
+### Requirements
 
 - [Bun](https://bun.sh)
-- A Cidercade Rewards account
-- (Optional) A Discord server with permission to create webhooks
+- A [Cidercade Rewards](https://rewards.cidercade.com) account
+- (Optional) A Discord server where you can create a webhook
 
-## Local setup
-
-### 1. Clone and install
+### Setup
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/dylan-dang/cidercade-completer.git
 cd cidercade-clent
 bun install
 ```
 
-### 2. Create a `.env` file
-
-Create `.env` in the project root (this file is gitignored):
+Create a `.env` file in the project root or set up environment variables from within your shell:
 
 ```env
 TOKEN=your_api_token
 DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ```
 
-### 3. Get your API token
-
-1. Log in to [rewards.cidercade.com](https://rewards.cidercade.com)
-2. Open developer tools → **Console** tab
-3. Paste and run:
-
-```js
-copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
-```
-
-4. The token is copied to your clipboard, paste it into `.env` as `TOKEN`
-
-> Fresh Tokens are good for about a month. If runs start failing with auth errors, grab a fresh token from the browser.
-
-### 4. Run locally
+Then run:
 
 ```bash
 bun start
 ```
-
-## Discord webhook setup
-
-### Create a webhook
-
-1. Open your Discord server
-2. Go to **Server Settings** → **Integrations** → **Webhooks**
-3. Click **New Webhook**
-4. Name it (e.g. `Cidercade`) and pick a channel
-5. Click **Copy Webhook URL**
-6. Paste the URL into `.env` as `DISCORD_WEBHOOK_URL`
-
-<img width="345" height="363" alt="{635EB4BB-D57C-4B37-A06E-965AE5FED35D}" src="https://github.com/user-attachments/assets/a2ca63b8-8b43-464e-861f-3214000ebeeb" />
-
-If `DISCORD_WEBHOOK_URL` is not set, the script still runs but skips the notification.
-
-## Using GitHub Actions (daily cron)
-
-The repo includes a workflow at `.github/workflows/daily.yml` that runs automatically every day at **14:00 UTC** (9 AM CT / 8 AM CST). You can also trigger it manually from the Actions tab.
-
-### 1. Push the repo to GitHub
-
-Make sure `.github/workflows/daily.yml` is on your default branch.
-
-### 2. Add repository secrets
-
-Secrets are **not** stored in the workflow file. Add them in GitHub:
-
-1. Open your repo on GitHub
-2. **Settings** → **Secrets and variables** → **Actions**
-3. Click **New repository secret** for each:
-
-
-| Secret name           | Value                                       |
-| --------------------- | ------------------------------------------- |
-| `TOKEN`               | Your token from `.env` (e.g. `eyJhbGci...`) |
-| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL                    |
-
-
-### 3. Run manually (optional)
-
-1. Go to the **Actions** tab
-2. Select **Daily Cidercade**
-3. Click **Run workflow**
-
-### 4. Check results
-
-- **Actions** tab - build logs if something fails
-- **Discord** - daily summary embed in your webhook channel
-
-> Scheduled workflows only run on the default branch and may be delayed by a few minutes on free-tier GitHub.
-
-### Keep workflows alive
-
-GitHub disables scheduled workflows after **60 days** without commits on the repo. A separate workflow at `.github/workflows/keep-alive.yml` runs daily at **00:00 UTC** and pushes an empty commit when the repo is close to that limit.
-
-**Required setting:** In **Settings** → **Actions** → **General**, set **Workflow permissions** to **Read and write permissions** so the keep-alive job can commit.
-
-## Scripts
 
 
 | Command                           | Description                                  |
 | --------------------------------- | -------------------------------------------- |
 | `bun start`                       | Run all daily tasks                          |
 | `bun run test:wotd-solver <word>` | Test the Wordle solver against a target word |
+
+
+From there, you can set up a cron job (on Unix-like systems) or use Windows Task Scheduler to automate running the script at your preferred intervals.
+
+For example, with a cron job you might add:
+```cron
+0 8 * * * cd /path/to/cidercade-completer && bun start
+```
+Or on Windows, you can create a scheduled task to run `bun start` daily at a specific time.
+
+---
 
 ## Disclaimer
 
