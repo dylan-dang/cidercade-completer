@@ -9,6 +9,9 @@ Each day it:
 3. Opens available **loot boxes**
 4. Sends a summary to **Discord** (optional)
 
+
+<img width="345" height="363" alt="image" src="https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a" />
+
 ---
 
 ## Running using GitHub Actions (recommended)
@@ -104,10 +107,7 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 3. Wait for the run to finish
 
 If there is a green check, then the script succeeded.
-Check Discord for the summary embed (if you set up a webhook) which should look something like this:
-
-<img width="345" height="363" alt="image" src="https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a" />
-
+Check Discord for the summary embed (if you set up a webhook).
 
 ### That’s it
 
