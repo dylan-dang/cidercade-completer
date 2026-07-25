@@ -23,7 +23,7 @@ This is the easiest way to setup cidercade complete and you do not need to insta
 
 ### Step 1: Fork this repo
 
-1. Open the fork page: [Fork this repository](https://github.com/dylan-dang/cidercade-completer/fork)
+1. On the top right of the repository page click "Fork" or [click here to go to the fork page directly](https://github.com/dylan-dang/cidercade-completer/fork)
 2. Keep the defaults and click **Create fork**
 
 You now have your own copy of the project.
@@ -43,7 +43,7 @@ copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
 
 > Tokens last about a month. If runs start failing, grab a fresh one the same way.
 
-### Step 3 (Optional): Create a Discord webhook
+### Step 3: Create a Discord webhook
 
 Skip this if you do not want Discord notifications.
 
@@ -51,7 +51,11 @@ Skip this if you do not want Discord notifications.
 2. Go to **Server Settings** → **Integrations** → **Webhooks**
 3. Click **New Webhook**
 4. Name it (e.g. `Cidercade`) and choose a channel
-5. Click **Copy Webhook URL**
+5. Click **Save Changes**
+6. Click **Copy Webhook URL**
+
+<img width="711" height="388" alt="{BEB2F263-E5FF-4584-BE29-68FF7DDA8D24}" src="https://github.com/user-attachments/assets/bfebc1b2-9e99-4231-aa99-965c3e7354af" />
+
 
 ### Step 4: Add secrets to your fork
 
@@ -72,8 +76,11 @@ Secrets store your private values so the script can acccess your Cidercade accou
 GitHub turns off scheduled workflows after 60 days of no activity. A small “keep-alive” job prevents that, but it needs write access:
 
 1. On your fork: **Settings** → **Actions** → **General**
-2. Under **Workflow permissions**, choose **Read and write permissions**
+2. Under **Workflow permissions** at the bottom of the page, choose **Read and write permissions**
 3. Click **Save**
+
+<img width="988" height="377" alt="image" src="https://github.com/user-attachments/assets/153aedd5-0180-4ded-b3a4-937f088eadc2" />
+
 
 ### Step 6: Enable Actions on your fork
 
@@ -81,8 +88,14 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 
 1. Open the **Actions** tab on your fork
 2. Click **I understand my workflows, go ahead and enable them**
-3. In the left sidebar, click **Daily Cidercade**, then click **Enable workflow**
-4. Do the same for **Keep GitHub Actions alive**
+
+<img width="768" height="435" alt="image" src="https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5" />
+
+4. In the left sidebar, click **Daily Cidercade**, then click **Enable workflow**
+6. Do the same for **Keep GitHub Actions alive**
+
+<img width="870" height="67" alt="image" src="https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f" />
+
 
 ### Step 7: Run it once to test
 
@@ -91,7 +104,10 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 3. Wait for the run to finish
 
 If there is a green check, then the script succeeded.
-Check Discord for the summary embed (if you set up a webhook).
+Check Discord for the summary embed (if you set up a webhook) which should look something like this:
+
+<img width="345" height="363" alt="image" src="https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a" />
+
 
 ### That’s it
 
@@ -114,8 +130,6 @@ After this, **Daily Cidercade** runs automatically every day. You only need to r
 ---
 
 ## Running locally
-
-Only needed if you want to develop or run the script on your own machine.
 
 ### Requirements
 
