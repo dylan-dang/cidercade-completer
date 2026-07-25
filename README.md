@@ -115,9 +115,9 @@ After this, **Daily Cidercade** runs automatically every day. You only need to r
 
 ---
 
-## Free admission puzzle pieces
+## Free admission puzzles
 
-Free admission puzzle pieces are **not** claimed automatically when they are completed the way they are when you obtain them normally. You can claim them at your discretion and do not have to worry about free admission expiration — just remember to tap **Claim now** for the puzzle in the app when you want to use them.
+Free admission puzzles are **not** claimed automatically when they are completed the way they are when you obtain them normally. You can claim them at your discretion, so you do not have to worry about free admission expiration — just remember to tap **Claim now** for the puzzle in the app when you want to use them.
 
 <img width="320" height="384" alt="Claiming puzzle pieces" src="https://github.com/user-attachments/assets/df6cbe53-75ee-4ec7-9878-e502973d9699" />
 
