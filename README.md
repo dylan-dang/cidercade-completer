@@ -10,7 +10,7 @@ Each day it:
 4. Sends a summary to **Discord** (optional)
 
 
-<img width="345" height="363" alt="image" src="https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a" />
+<img width="345" height="363" alt="Discord embed summary" src="https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a" />
 
 ---
 
@@ -57,7 +57,7 @@ Skip this if you do not want Discord notifications.
 5. Click **Save Changes**
 6. Click **Copy Webhook URL**
 
-<img width="711" height="388" alt="{BEB2F263-E5FF-4584-BE29-68FF7DDA8D24}" src="https://github.com/user-attachments/assets/bfebc1b2-9e99-4231-aa99-965c3e7354af" />
+<img width="711" height="388" alt="Webhook settings" src="https://github.com/user-attachments/assets/bfebc1b2-9e99-4231-aa99-965c3e7354af" />
 
 
 ### Step 4: Add secrets to your fork
@@ -82,7 +82,7 @@ GitHub turns off scheduled workflows after 60 days of no activity. A small “ke
 2. Under **Workflow permissions** at the bottom of the page, choose **Read and write permissions**
 3. Click **Save**
 
-<img width="988" height="377" alt="image" src="https://github.com/user-attachments/assets/153aedd5-0180-4ded-b3a4-937f088eadc2" />
+<img width="988" height="377" alt="Workflow permissions" src="https://github.com/user-attachments/assets/153aedd5-0180-4ded-b3a4-937f088eadc2" />
 
 
 ### Step 6: Enable Actions on your fork
@@ -92,12 +92,12 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 1. Open the **Actions** tab on your fork
 2. Click **I understand my workflows, go ahead and enable them**
 
-<img width="768" height="435" alt="image" src="https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5" />
+<img width="768" height="435" alt="Enabling Actions" src="https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5" />
 
 4. In the left sidebar, click **Daily Cidercade**, then click **Enable workflow**
 6. Do the same for **Keep GitHub Actions alive**
 
-<img width="870" height="67" alt="image" src="https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f" />
+<img width="870" height="67" alt="Enabling Workflows" src="https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f" />
 
 
 ### Step 7: Run it once to test
@@ -112,6 +112,14 @@ Check Discord for the summary embed (if you set up a webhook).
 ### That’s it
 
 After this, **Daily Cidercade** runs automatically every day. You only need to refresh `TOKEN` when it expires (about once a month).
+
+---
+
+## Free admission puzzle pieces
+
+Free admission puzzle pieces are **not** claimed automatically when they are completed the way they are when you obtain them normally. You can claim them at your discretion and do not have to worry about free admission expiration — just remember to tap **Claim now** for the puzzle in the app when you want to use them.
+
+Cidercade does not show overflowed puzzle pieces, so you cannot tell how many you have except by counting them yourself.
 
 ---
 
