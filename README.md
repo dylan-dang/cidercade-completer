@@ -16,7 +16,7 @@ Each day it:
 
 ## Running using GitHub Actions (recommended)
 
-This is the easiest way to setup cidercade complete and you do not need to install anything on your computer. GitHub will run the script for you every day at **9 AM Central** (14:00 UTC).
+This is the easiest way to setup cidercade completer and you do not need to install anything on your computer. GitHub will run the script for you every day at **9 AM Central** (14:00 UTC).
 
 ### What you need
 
