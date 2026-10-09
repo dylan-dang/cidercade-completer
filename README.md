@@ -24,7 +24,7 @@ This is the easiest way to setup cidercade completer and you do not need to inst
 - One of:
   - An iPhone with the [GitHub app](https://apps.apple.com/app/github/id1477376905) installed and signed in
   - An Android phone with [MacroDroid](https://play.google.com/store/apps/details?id=com.arlosoft.macrodroid) installed
-  - If you don't want to setup phone automation, you can manually refresh your Cidercade token monthly by [entering your token manually](#entering-your-token-manually) (not recommended)
+  - If you don't want to setup phone automation, you can manually refresh your Cidercade token monthly by [entering your token manually](#entering-your-token-manually-not-recommended) (not recommended)
 - (Optional) A Discord server where you can create a webhook
 
 ### Step 1: Fork this repo
@@ -54,12 +54,12 @@ This lets cidercade completer update its secrets and variables.
 1. Go to [Settings → Developer settings → Fine-grained tokens → Generate new token](https://github.com/settings/personal-access-tokens/new)
 2. Fill in:
   - **Token name:** anything, e.g. `cidercade-writer`
-  - **Expiration:** your choice, Set it to `No Expiration` to forget about it. If you do set it to expire, you will need to generate a new one and update the `GH_PAT` secret when it expires.
+  - **Expiration:** `No Expiration`
   - **Repository access:** **Only select repositories** → your fork of `cidercade-completer`
   - **Permissions** → **Repository permissions** → **Secrets:** **Read and write**, and **Variables:** **Read and write**
-  ![{CE160DBF-0A65-4465-918B-F97A1BDA1FFD}](https://github.com/user-attachments/assets/37ab20f9-12fe-4aa8-b528-85819a3aa88c)
+    <img width="794" height="909" alt="{222EB255-A47C-42E0-BD9B-AF2F257C630A}" src="https://github.com/user-attachments/assets/36a2d010-29e1-4802-88cd-05772d6ad1ea" />
 3. Click **Generate token** and copy it. GitHub only shows it once
-  ![{41D6FC52-D2F9-4B2B-AD9B-EF4D63B5AFFB}](https://github.com/user-attachments/assets/17eb710f-5ee7-4ca5-8b5c-5fd024a63455)
+    ![{41D6FC52-D2F9-4B2B-AD9B-EF4D63B5AFFB}](https://github.com/user-attachments/assets/17eb710f-5ee7-4ca5-8b5c-5fd024a63455)
 
 ### Step 4: Add secrets to your fork
 
@@ -100,74 +100,76 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 
 ### Step 7: Create the phone automation
 
-<details>
-<summary>Open the instructions for your phone</summary>
+Open the instructions for your phone:
 
 <details>
-<summary>iOS 27 and later</summary>
+<summary>iOS 27 and later:</summary>
 
-Automations are a block at the top of a shortcut. You may work off this [Shortcut template](https://www.icloud.com/shortcuts/486ac665779d4ad8bf6dfc116fb99bfa) or create it manually:
+You may work off this [Shortcut template](https://www.icloud.com/shortcuts/64d997bbe64540f39e0ce45f77e5cfd4), replacing dylan-dang with your own username, or create it manually:
 
 1. Open the **Shortcuts** app
 2. Tap **+** at the bottom of your screen
 3. Tap **Edit** at the top right of your screen
 4. Tap **Automation**, then **Message**. The trigger is added as a block at the top of the shortcut
-
-5. On that block, tap `Sender`, replace it with `Message`, and set it to contain
+5. On that block, tap `Sender`, replace it with `Message`, and set it to contain:
    ```plaintext
    Your Cidercade verification code is:
    ```
-6. Tap the arrow on the block and turn **Confirm Before Run** off
-7. Add the GitHub **Dispatch Workflow** action and fill in:
-
-| Field        | Value                                                                                              |
-| ------------ | -------------------------------------------------------------------------------------------------- |
-| Owner        | Your GitHub username (or whatever you set the owner as when you [created the fork](#step-1-fork-this-repo) e.g. dylan-dang)                                                             |
-| Workflow ID  | `authenticate.yml`                                                                                 |
-| Repository   | `cidercade-completer` (or your fork name when you [created the fork](#step-1-fork-this-repo))                                                                  |
-| Branch / ref | `master`                                                                                           |
-| Inputs       | `{"message":"[Message]"}` (where `[Message]` is the variable created from the previous automation) |
-| Account      | Your GitHub account selected |
+   > Confirm that **Confirm Before Run** is off and **Automation** is on by tapping on the arrow on top of the block
+6. Add the GitHub **Dispatch Workflow** action and fill in:
+  
+  | Field        | Value                                                                                              |
+  | ------------ | -------------------------------------------------------------------------------------------------- |
+  | Owner        | Your GitHub username (e.g. dylan-dang, or owner you set when [creating the fork](#step-1-fork-this-repo))                                                             |
+  | Workflow ID  | `authenticate.yml`                                                                                 |
+  | Repository   | `cidercade-completer` (or your fork name when [creating the fork](#step-1-fork-this-repo))                                                                  |
+  | Branch / ref | `master`                                                                                           |
+  | Inputs       | `{"message":"[Message]"}` (for  `[Message]` press "Select Variable" when focused on the Inputs field and press the `Message` output from the previous block from above) |
+  | Account      | Select your GitHub account                                                                        |
 
 It should look something like this:
 
-![image](https://github.com/user-attachments/assets/ebd70b64-d683-4623-af5c-2ac1e11521fc)
+<img width="302" height="460" alt="image" src="https://github.com/user-attachments/assets/e76be96d-cf6f-4a1b-ab89-b639f21b8af4" />
+
 
 </details>
 
 <details>
-<summary>iOS 26 and earlier</summary>
+<summary>iOS 26 and earlier:</summary>
 
 1. Open the **Shortcuts** app
 2. Tap the **Automation** tab, then **+** (or **New Automation**)
 3. Search for **Message** and select **When I receive a message**
-4. Set **Message Contains** to 
+4. Set **Message Contains** to:
    ```plaintext
    Your Cidercade verification code is:
    ```
 5. choose **Run Immediately**, and confirm
+6. Add the GitHub **Dispatch Workflow** action and fill in:
 
-Add the GitHub **Dispatch Workflow** action and fill in:
+  | Field        | Value                                                                                              |
+  | ------------ | -------------------------------------------------------------------------------------------------- |
+  | Owner        | Your GitHub username (e.g. dylan-dang, or owner you set when [creating the fork](#step-1-fork-this-repo))                                                             |
+  | Workflow ID  | `authenticate.yml`                                                                                 |
+  | Repository   | `cidercade-completer` (or your fork name when [creating the fork](#step-1-fork-this-repo))                                                                  |
+  | Branch / ref | `master`                                                                                           |
+  | Inputs       | `{"message":"[Shortcut Input]"}` (for `[Shortcut Input]` press "Select Variable" when focused on the Inputs field) |
+  | Account      | Select your GitHub account                                                                         |
 
-| Field        | Value                                                                                              |
-| ------------ | -------------------------------------------------------------------------------------------------- |
-| Owner        | Your GitHub username (e.g. dylan-dang)                                                             |
-| Workflow ID  | `authenticate.yml`                                                                                 |
-| Repository   | `cidercade-completer` (your fork)                                                                  |
-| Branch / ref | `master`                                                                                           |
-| Inputs       | `{"message":"[Shortcut Input]"}` (for `[Shortcut Input]` press "Select Variable" when focused on the Input box) |
-| Account      | Your GitHub account selected |
+It should look something like this:
+
+<img width="302" height="339" alt="image" src="https://github.com/user-attachments/assets/26c75416-fc0d-4456-a4fd-226924441f42" />
 
 </details>
 
 <details>
-<summary>Android</summary>
+<summary>Android:</summary>
 
 Android has no GitHub app shortcut, so MacroDroid calls the GitHub API directly. It needs its own token that can only start workflows.
 
 1. Create a second [fine-grained token](https://github.com/settings/personal-access-tokens/new) the same way as [Step 3](#step-3-create-a-github-personal-access-token), except:
   - **Token name:** e.g. `cidercade-phone`
-  - **Permissions** → **Repository permissions** → **Actions:** **Read and write** (no Secrets access)
+  - **Permissions** → **Repository permissions** → **Actions:** **Read and write**
 2. Open **MacroDroid** and tap **Add Macro**
 3. Under **Triggers**, tap **+**, search for **SMS Received** and set:
   - **Incoming from:** Any number
@@ -187,7 +189,6 @@ Android has no GitHub app shortcut, so MacroDroid calls the GitHub API directly.
 
 </details>
 
-</details>
 
 > Prefer not to use a phone automation? When you get the verification text, open [**Actions** → **Authenticate Cidercade**](../../actions/workflows/authenticate.yml) → **Run workflow**, paste the text, and click **Run workflow**. Verification codes expire, so do this soon after the text arrives.
 
@@ -206,25 +207,21 @@ Your phone automation picks up the text and runs **Authenticate Cidercade**. Whe
 
 ---
 
-## Free admission puzzles
+## Tracking admission puzzles
 
 Free admission puzzles are **not** claimed automatically when they are completed the way they are when you obtain them normally. You can claim them at your discretion, so you do not have to worry about free admission expiration — just remember to tap **Claim now** for the puzzle in the app when you want to use them.
 
 ![Claiming puzzle pieces](https://github.com/user-attachments/assets/df6cbe53-75ee-4ec7-9878-e502973d9699)
 
-Cidercade does not show overflowed puzzle pieces in their app or website. Therefore, you can only know how many you have by counting them manually, redeeming, or letting cidercade-completer track them for you.
+Cidercade does not show overflowed puzzle pieces in their app or website, so cidercade-completer can help you count overflowed puzzle pieces.
+Each run will add to a running total of admission pieces earned and subtracts any you used since the last run (from your Cidercade activity history) and log it in your discord embed summaries.
 
-### Tracking admission pieces
+However, it won't be able to see any pieces earned before tracking started. So you may need to update the count if you already had overflowed pieces, e.g. by running an older version of cidercade completer before piece counting was implemented.
 
-cidercade-completer can help count overflowed puzzle pieces. Each run adds the admission pieces it earned and subtracts any you used since the last run (from your Cidercade activity history). The loot box summary in Discord then shows something like:
-
-> You have **9** admission puzzle pieces (**2** admissions)
->
-> **25** pieces earned in total since tracking started
-
-Tracking is on whenever the `GH_PAT` secret is set with **Variables: Read and write** permission, which the [recommended setup](#step-3-create-a-github-personal-access-token) already does. If you [enter your token manually](#entering-your-token-manually), you can still turn it on by creating a `GH_PAT` the same way. Without it, the count line is left out of the summary. The count is stored in a repository variable called `ADMISSION_PIECES`, under [**Settings** → **Secrets and variables** → **Actions** → **Variables**](../../settings/variables/actions). If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces.
-
+The count is stored in a repository variable called `ADMISSION_PIECES`, under [**Settings** → **Secrets and variables** → **Actions** → **Variables**](../../settings/variables/actions). If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces. 
 When running locally, the count is stored in `.admission-pieces.json` instead.
+
+> When using Github Actions, tracking will only whenever the `GH_PAT` secret is set with **Variables: Read and write** permission. Without it, the count line is left out of the summary.
 
 ---
 
