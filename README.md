@@ -99,7 +99,7 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 
 ![Enabling Workflows](https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f)
 
-4. Optional: enable [**Auto update**](../../actions/workflows/auto-update.yml) the same way if you would like to recieve automatic updates to sync to this upstream fork weekly.
+4. Optional: enable [**Auto update**](../../actions/workflows/auto-update.yml) the same way if you would like to receive automatic updates to sync to upstream weekly.
 
 ### Step 7: Create the phone automation
 
