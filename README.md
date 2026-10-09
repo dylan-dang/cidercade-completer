@@ -9,7 +9,7 @@ Each day it:
 3. Opens available **loot boxes**
 4. Sends a summary to **Discord** (optional)
 
-![Discord embed summary](https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a)
+<img width="487" height="354" alt="discord embed summary" src="https://github.com/user-attachments/assets/639039da-4d0b-4837-a20a-b9e3af8db3df" />
 
 ---
 
