@@ -1,0 +1,49 @@
+name: Auto update
+
+on:
+  schedule:
+    - cron: "0 15 * * 0"
+      timezone: America/Chicago
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge upstream
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          parent="$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.parent.full_name // empty')"
+          if [ -z "$parent" ]; then
+            echo "This repository is not a fork."
+            exit 0
+          fi
+
+          branch="$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.parent.default_branch')"
+          git remote add upstream "https://github.com/${parent}.git"
+          git fetch upstream "$branch"
+
+          if git merge-base --is-ancestor "upstream/${branch}" HEAD; then
+            echo "Already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git merge "upstream/${branch}" --no-edit; then
+            git merge --abort
+            echo "::error::Upstream changes conflict with commits on this fork."
+            exit 1
+          fi
+
+          git push
