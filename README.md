@@ -53,13 +53,15 @@ This lets cidercade completer update its secrets and variables.
 
 1. Go to [Settings → Developer settings → Fine-grained tokens → Generate new token](https://github.com/settings/personal-access-tokens/new)
 2. Fill in:
-  - **Token name:** anything, e.g. `cidercade-writer`
-  - **Expiration:** `No Expiration`
-  - **Repository access:** **Only select repositories** → your fork of `cidercade-completer`
-  - **Permissions** → **Repository permissions** → **Secrets:** **Read and write**, and **Variables:** **Read and write**
-    <img width="794" height="909" alt="{222EB255-A47C-42E0-BD9B-AF2F257C630A}" src="https://github.com/user-attachments/assets/36a2d010-29e1-4802-88cd-05772d6ad1ea" />
+
+- **Token name:** anything, e.g. `cidercade-writer`
+- **Expiration:** `No Expiration`
+- **Repository access:** **Only select repositories** → your fork of `cidercade-completer`
+- **Permissions** → **Repository permissions** → **Secrets:** **Read and write**, and **Variables:** **Read and write**
+  <img width="794" height="909" alt="{222EB255-A47C-42E0-BD9B-AF2F257C630A}" src="https://github.com/user-attachments/assets/36a2d010-29e1-4802-88cd-05772d6ad1ea" />
+
 3. Click **Generate token** and copy it. GitHub only shows it once
-    ![{41D6FC52-D2F9-4B2B-AD9B-EF4D63B5AFFB}](https://github.com/user-attachments/assets/17eb710f-5ee7-4ca5-8b5c-5fd024a63455)
+   ![{41D6FC52-D2F9-4B2B-AD9B-EF4D63B5AFFB}](https://github.com/user-attachments/assets/17eb710f-5ee7-4ca5-8b5c-5fd024a63455)
 
 ### Step 4: Add secrets to your fork
 
@@ -68,12 +70,11 @@ Secrets store your private values so the script can access your Cidercade accoun
 1. On **your fork**, go to [**Settings** → **Secrets and variables** → **Actions**](../../settings/secrets/actions)
 2. Click **New repository secret** for each row below:
 
-
-| Secret name           | What to paste                                                     |
-| --------------------- | ----------------------------------------------------------------- |
-| `GH_PAT`              | The personal access token from Step 3                             |
+| Secret name           | What to paste                                                               |
+| --------------------- | --------------------------------------------------------------------------- |
+| `GH_PAT`              | The personal access token from Step 3                                       |
 | `PHONE_NUMBER`        | Your Cidercade account phone number, **formatted such as** `(512) 555-0123` |
-| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL from Step 2 (optional)                   |
+| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL from Step 2 (optional)                             |
 
 ### Step 5: Allow the daily workflow to commit
 
@@ -92,11 +93,11 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 1. Open the [**Actions**](../../actions) tab on your fork
 2. Click **I understand my workflows, go ahead and enable them**
 
-  ![Enabling Actions](https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5)
+![Enabling Actions](https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5)
 
 3. In the left sidebar, click [**Daily Cidercade**](../../actions/workflows/daily.yml), then click **Enable workflow**
 
-  ![Enabling Workflows](https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f)
+![Enabling Workflows](https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f)
 
 ### Step 7: Create the phone automation
 
@@ -117,20 +118,19 @@ You may work off this [Shortcut template](https://www.icloud.com/shortcuts/64d99
    ```
    > Confirm that **Confirm Before Run** is off and **Automation** is on by tapping on the arrow on top of the block
 6. Add the GitHub **Dispatch Workflow** action and fill in:
-  
-  | Field        | Value                                                                                              |
-  | ------------ | -------------------------------------------------------------------------------------------------- |
-  | Owner        | Your GitHub username (e.g. dylan-dang, or owner you set when [creating the fork](#step-1-fork-this-repo))                                                             |
-  | Workflow ID  | `authenticate.yml`                                                                                 |
-  | Repository   | `cidercade-completer` (or your fork name when [creating the fork](#step-1-fork-this-repo))                                                                  |
-  | Branch / ref | `master`                                                                                           |
-  | Inputs       | `{"message":"[Message]"}` (for  `[Message]` press "Select Variable" when focused on the Inputs field and press the `Message` output from the previous block from above) |
-  | Account      | Select your GitHub account                                                                        |
+
+| Field        | Value                                                                                                                                                                  |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Owner        | Your GitHub username (e.g. dylan-dang, or owner you set when [creating the fork](#step-1-fork-this-repo))                                                              |
+| Workflow ID  | `authenticate.yml`                                                                                                                                                     |
+| Repository   | `cidercade-completer` (or your fork name when [creating the fork](#step-1-fork-this-repo))                                                                             |
+| Branch / ref | `master`                                                                                                                                                               |
+| Inputs       | `{"message":"[Message]"}` (for `[Message]` press "Select Variable" when focused on the Inputs field and press the `Message` output from the previous block from above) |
+| Account      | Select your GitHub account                                                                                                                                             |
 
 It should look something like this:
 
 <img width="302" height="460" alt="image" src="https://github.com/user-attachments/assets/e76be96d-cf6f-4a1b-ab89-b639f21b8af4" />
-
 
 </details>
 
@@ -147,14 +147,14 @@ It should look something like this:
 5. choose **Run Immediately**, and confirm
 6. Add the GitHub **Dispatch Workflow** action and fill in:
 
-  | Field        | Value                                                                                              |
-  | ------------ | -------------------------------------------------------------------------------------------------- |
-  | Owner        | Your GitHub username (e.g. dylan-dang, or owner you set when [creating the fork](#step-1-fork-this-repo))                                                             |
-  | Workflow ID  | `authenticate.yml`                                                                                 |
-  | Repository   | `cidercade-completer` (or your fork name when [creating the fork](#step-1-fork-this-repo))                                                                  |
-  | Branch / ref | `master`                                                                                           |
-  | Inputs       | `{"message":"[Shortcut Input]"}` (for `[Shortcut Input]` press "Select Variable" when focused on the Inputs field) |
-  | Account      | Select your GitHub account                                                                         |
+| Field        | Value                                                                                                              |
+| ------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Owner        | Your GitHub username (e.g. dylan-dang, or owner you set when [creating the fork](#step-1-fork-this-repo))          |
+| Workflow ID  | `authenticate.yml`                                                                                                 |
+| Repository   | `cidercade-completer` (or your fork name when [creating the fork](#step-1-fork-this-repo))                         |
+| Branch / ref | `master`                                                                                                           |
+| Inputs       | `{"message":"[Shortcut Input]"}` (for `[Shortcut Input]` press "Select Variable" when focused on the Inputs field) |
+| Account      | Select your GitHub account                                                                                         |
 
 It should look something like this:
 
@@ -168,27 +168,31 @@ It should look something like this:
 Android has no GitHub app shortcut, so MacroDroid calls the GitHub API directly. It needs its own token that can only start workflows.
 
 1. Create a second [fine-grained token](https://github.com/settings/personal-access-tokens/new) the same way as [Step 3](#step-3-create-a-github-personal-access-token), except:
-  - **Token name:** e.g. `cidercade-phone`
-  - **Permissions** → **Repository permissions** → **Actions:** **Read and write**
+
+- **Token name:** e.g. `cidercade-phone`
+- **Permissions** → **Repository permissions** → **Actions:** **Read and write**
+
 2. Open **MacroDroid** and tap **Add Macro**
 3. Under **Triggers**, tap **+**, search for **SMS Received** and set:
-  - **Incoming from:** Any number
-  - **Message content:** Contains `Your Cidercade verification code is:`
+
+- **Incoming from:** Any number
+- **Message content:** Contains `Your Cidercade verification code is:`
+
 4. Under **Actions**, tap **+**, search for **HTTP Request** and fill in:
 
-  | Field        | Value                                                                                                            |
-  | ------------ | ---------------------------------------------------------------------------------------------------------------- |
-  | Method       | `POST`                                                                                                           |
-  | URL          | `https://api.github.com/repos/<your-username>/cidercade-completer/actions/workflows/authenticate.yml/dispatches` |
-  | Headers      | `Authorization`: `Bearer <token from step 1>` `Accept`: `application/vnd.github+json`                            |
-  | Content type | `application/json`                                                                                               |
-  | Body         | `{"ref": "master", "inputs": {"message": "[sms_message]"}}`                                                      |
+| Field        | Value                                                                                                            |
+| ------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Method       | `POST`                                                                                                           |
+| URL          | `https://api.github.com/repos/<your-username>/cidercade-completer/actions/workflows/authenticate.yml/dispatches` |
+| Headers      | `Authorization`: `Bearer <token from step 1>` `Accept`: `application/vnd.github+json`                            |
+| Content type | `application/json`                                                                                               |
+| Body         | `{"ref": "master", "inputs": {"message": "[sms_message]"}}`                                                      |
 
-   `[sms_message]` is MacroDroid's placeholder for the text of the SMS. You can insert it from the **...** menu next to the body field.
+`[sms_message]` is MacroDroid's placeholder for the text of the SMS. You can insert it from the **...** menu next to the body field.
+
 5. Name the macro (e.g. `Cidercade OTP`) and save it
 
 </details>
-
 
 > Prefer not to use a phone automation? When you get the verification text, open [**Actions** → **Authenticate Cidercade**](../../actions/workflows/authenticate.yml) → **Run workflow**, paste the text, and click **Run workflow**. Verification codes expire, so do this soon after the text arrives.
 
@@ -218,7 +222,7 @@ Each run will add to a running total of admission pieces earned and subtracts an
 
 However, it won't be able to see any pieces earned before tracking started. So you may need to update the count if you already had overflowed pieces, e.g. by running an older version of cidercade completer before piece counting was implemented.
 
-The count is stored in a repository variable called `ADMISSION_PIECES`, under [**Settings** → **Secrets and variables** → **Actions** → **Variables**](../../settings/variables/actions). If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces. 
+The count is stored in a repository variable called `ADMISSION_PIECES`, under [**Settings** → **Secrets and variables** → **Actions** → **Variables**](../../settings/variables/actions). If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces.
 When running locally, the count is stored in `.admission-pieces.json` instead.
 
 > When using Github Actions, tracking will only whenever the `GH_PAT` secret is set with **Variables: Read and write** permission. Without it, the count line is left out of the summary.
@@ -241,7 +245,7 @@ Follow Steps 1, 2, 5 and 6 above, then:
 4. Paste this and press Enter. It finds your Cidercade token and copies its value to the clipboard:
 
 ```js
-copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
+copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2]);
 ```
 
 > Some browsers block pasting into the console the first time. If yours shows a warning, type `allow pasting` and press Enter, then paste again.
@@ -262,7 +266,6 @@ If there is a green check, the script succeeded and will now run every day. When
 
 ## Troubleshooting
 
-
 | Problem                                                          | What to try                                                                                                                                                                      |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Auth / 401 errors                                                | Check that your phone automation ran **Authenticate Cidercade** after the verification text. If you enter your token manually, replace `TOKEN` with a fresh one from the browser |
@@ -270,7 +273,7 @@ If there is a green check, the script succeeded and will now run every day. When
 | Authenticate fails saving the secret                             | Check that `GH_PAT` is set, has **Secrets: Read and write**, and has not expired                                                                                                 |
 | "Could not update admission piece count"                         | Check that `GH_PAT` is set and has **Variables: Read and write**                                                                                                                 |
 | No Discord message                                               | Confirm `DISCORD_WEBHOOK_URL` is set, or check the [Actions log](../../actions)                                                                                                  |
-| Scheduled runs stopped after ~2 months                           | Confirm [**Read and write permissions**](../../settings/actions) (Step 5) so the daily workflow's keep-alive step can commit                                                      |
+| Scheduled runs stopped after ~2 months                           | Confirm [**Read and write permissions**](../../settings/actions) (Step 5) so the daily workflow's keep-alive step can commit                                                     |
 
 ---
 
@@ -307,12 +310,10 @@ Then run:
 bun start
 ```
 
-
 | Command                           | Description                                  |
 | --------------------------------- | -------------------------------------------- |
 | `bun start`                       | Run all daily tasks                          |
 | `bun run test:wotd-solver <word>` | Test the Wordle solver against a target word |
-
 
 From there, you can set up a cron job (on Unix-like systems) or use Windows Task Scheduler to automate running the script at your preferred intervals.
 
