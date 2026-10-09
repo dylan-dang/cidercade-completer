@@ -92,11 +92,11 @@ GitHub disables workflows on forks by default. You must turn them on once, then 
 1. Open the [**Actions**](../../actions) tab on your fork
 2. Click **I understand my workflows, go ahead and enable them**
 
-![Enabling Actions](https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5)
+  ![Enabling Actions](https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5)
 
-1. In the left sidebar, click [**Daily Cidercade**](../../actions/workflows/daily.yml), then click **Enable workflow**
+3. In the left sidebar, click [**Daily Cidercade**](../../actions/workflows/daily.yml), then click **Enable workflow**
 
-![Enabling Workflows](https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f)
+  ![Enabling Workflows](https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f)
 
 ### Step 7: Create the phone automation
 
