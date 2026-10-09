@@ -9,8 +9,7 @@ Each day it:
 3. Opens available **loot boxes**
 4. Sends a summary to **Discord** (optional)
 
-<img width="487" height="354" alt="{5D97F331-F74B-4784-BD5B-3573A7B587A3}" src="https://github.com/user-attachments/assets/639039da-4d0b-4837-a20a-b9e3af8db3df" />
-
+![Discord embed summary](https://github.com/user-attachments/assets/652b3e5a-0b09-4434-974d-3fb82cf6fb2a)
 
 ---
 
@@ -21,36 +20,21 @@ This is the easiest way to setup cidercade completer and you do not need to inst
 ### What you need
 
 - A free [GitHub](https://github.com) account
-- A [Cidercade Rewards](https://rewards.cidercade.com) account
+- A [Cidercade Rewards](https://rewards.cidercade.com) account and the phone number you sign in with
+- One of:
+  - An iPhone with the [GitHub app](https://apps.apple.com/app/github/id1477376905) installed and signed in
+  - An Android phone with [MacroDroid](https://play.google.com/store/apps/details?id=com.arlosoft.macrodroid) installed
+  - If you don't want to setup phone automation, you can manually refresh your Cidercade token monthly by [entering your token manually](#entering-your-token-manually) (not recommended)
 - (Optional) A Discord server where you can create a webhook
 
 ### Step 1: Fork this repo
 
 1. On the top right of the repository page click "Fork" or [click here to go to the fork page directly](https://github.com/dylan-dang/cidercade-completer/fork)
-2. Keep the defaults and click **Create fork**
+2. Keep the defaults, choosing an owner if necessary, and click **Create fork**
 
 You now have your own copy of the project.
 
-### Step 2: Get your Cidercade token
-
-You can skip this if you are going to set up [automatic OTP token refresh](#setting-up-automatic-otp-token-refresh). The token will be created for you the first time you run it.
-
-1. Log in at [rewards.cidercade.com](https://rewards.cidercade.com)
-2. Press `F12` (or right-click → **Inspect**) to open developer tools
-3. Open the **Console** tab
-4. Paste this and press Enter:
-
-```js
-copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
-```
-
-1. Your token is now on your clipboard, keep it for the next step
-
-> Tokens last about a month. If runs start failing, grab a fresh one the same way.
-
-
-
-### Step 3: Create a Discord webhook
+### Step 2: Create a Discord webhook
 
 Skip this if you do not want Discord notifications.
 
@@ -63,27 +47,39 @@ Skip this if you do not want Discord notifications.
 
 ![Webhook settings](https://github.com/user-attachments/assets/bfebc1b2-9e99-4231-aa99-965c3e7354af)
 
+### Step 3: Create a GitHub personal access token
+
+This lets cidercade completer update its secrets and variables.
+
+1. Go to [Settings → Developer settings → Fine-grained tokens → Generate new token](https://github.com/settings/personal-access-tokens/new)
+2. Fill in:
+  - **Token name:** anything, e.g. `cidercade-writer`
+  - **Expiration:** your choice, Set it to `No Expiration` to forget about it. If you do set it to expire, you will need to generate a new one and update the `GH_PAT` secret when it expires.
+  - **Repository access:** **Only select repositories** → your fork of `cidercade-completer`
+  - **Permissions** → **Repository permissions** → **Secrets:** **Read and write**, and **Variables:** **Read and write**
+  ![{CE160DBF-0A65-4465-918B-F97A1BDA1FFD}](https://github.com/user-attachments/assets/37ab20f9-12fe-4aa8-b528-85819a3aa88c)
+3. Click **Generate token** and copy it. GitHub only shows it once
+  ![{41D6FC52-D2F9-4B2B-AD9B-EF4D63B5AFFB}](https://github.com/user-attachments/assets/17eb710f-5ee7-4ca5-8b5c-5fd024a63455)
+
 ### Step 4: Add secrets to your fork
 
-Secrets store your private values so the script can acccess your Cidercade account.
+Secrets store your private values so the script can access your Cidercade account.
 
-1. On **your fork**, go to **Settings** → **Secrets and variables** → **Actions**
+1. On **your fork**, go to [**Settings** → **Secrets and variables** → **Actions**](../../settings/secrets/actions)
 2. Click **New repository secret** for each row below:
 
 
-| Secret name           | What to paste                                                                                                       |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `TOKEN`               | Your Cidercade token from Step 2 (optional with [automatic token refresh](#setting-up-automatic-otp-token-refresh)) |
-| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL from Step 3 (optional)                                                                     |
+| Secret name           | What to paste                                                     |
+| --------------------- | ----------------------------------------------------------------- |
+| `GH_PAT`              | The personal access token from Step 3                             |
+| `PHONE_NUMBER`        | Your Cidercade account phone number, **formatted such as** `(512) 555-0123` |
+| `DISCORD_WEBHOOK_URL` | Your Discord webhook URL from Step 2 (optional)                   |
 
+### Step 5: Allow the daily workflow to commit
 
+GitHub turns off scheduled workflows after 60 days of no activity. **Daily Cidercade** includes a small keep-alive step that commits so that does not happen, but it needs write access:
 
-
-### Step 5: Allow the keep-alive workflow to commit
-
-GitHub turns off scheduled workflows after 60 days of no activity. A small “keep-alive” job prevents that, but it needs write access:
-
-1. On your fork: **Settings** → **Actions** → **General**
+1. On your fork: [**Settings** → **Actions** → **General**](../../settings/actions)
 2. Under **Workflow permissions** at the bottom of the page, choose **Read and write permissions**
 3. Click **Save**
 
@@ -93,103 +89,65 @@ GitHub turns off scheduled workflows after 60 days of no activity. A small “ke
 
 GitHub disables workflows on forks by default. You must turn them on once, then enable each workflow individually:
 
-1. Open the **Actions** tab on your fork
+1. Open the [**Actions**](../../actions) tab on your fork
 2. Click **I understand my workflows, go ahead and enable them**
 
 ![Enabling Actions](https://github.com/user-attachments/assets/913c4d02-8dc4-4c83-9db2-e2940c967fb5)
 
-1. In the left sidebar, click **Daily Cidercade**, then click **Enable workflow**
-2. Do the same for **Keep GitHub Actions alive**
+1. In the left sidebar, click [**Daily Cidercade**](../../actions/workflows/daily.yml), then click **Enable workflow**
 
 ![Enabling Workflows](https://github.com/user-attachments/assets/af185cb6-eac3-45db-8e5f-e3c7ee84c86f)
 
-### Step 7: Run it once to test
+### Step 7: Create the phone automation
 
-1. Still on the **Actions** tab, select **Daily Cidercade** in the left sidebar
-2. Click **Run workflow** → **Run workflow**
-3. Wait for the run to finish
+<details>
+<summary>Open the instructions for your phone</summary>
 
-If there is a green check, then the script succeeded.
-Check Discord for the summary embed (if you set up a webhook).
+<details>
+<summary>iOS 27 and later</summary>
 
-> If you skipped `TOKEN`, set up [automatic OTP token refresh](#setting-up-automatic-otp-token-refresh) instead of running this step. It walks you through the first run.
-
-
-
-### That’s it
-
-After this, **Daily Cidercade** runs automatically every day. You only need to refresh `TOKEN` when it expires (about once a month). To have this done for you, set up [automatic OTP token refresh](#setting-up-automatic-otp-token-refresh) below.
-
----
-
-
-
-## Setting up automatic OTP token refresh
-
-Instead of copying a new token from your browser every month, your phone can refresh it for you using the verification code Cidercade texts you.
-
-Once set up, it works like this with no input from you:
-
-1. **Daily Cidercade** notices your token has expired and texts a verification code to your phone
-2. An automation on your phone sees the text and runs the **Authenticate Cidercade** workflow with it
-3. The workflow signs in, saves the new token to your `TOKEN` secret, and runs the daily tasks
-
-
-
-### What you need
-
-- One of:
-  - An iPhone with the [GitHub app](https://apps.apple.com/app/github/id1477376905) installed and signed in
-  - An Android phone with [MacroDroid](https://play.google.com/store/apps/details?id=com.arlosoft.macrodroid) installed
-- The phone number on your Cidercade account
-
-
-
-### Step 1: Create a GitHub personal access token
-
-The workflow needs permission to update your `TOKEN` secret, which the default GitHub Actions token cannot do.
-
-1. Go to [Settings → Developer settings → Fine-grained tokens → Generate new token](https://github.com/settings/personal-access-tokens/new)
-2. Fill in:
-  - **Token name:** anything, e.g. `cidercade-writer`
-  - **Expiration:** your choice, Set it to `No Expiration` to forget about it. When it expires, generate a new one and update the `GH_PAT` secret
-  - **Repository access:** **Only select repositories** → your fork of `cidercade-completer`
-  - **Permissions** → **Repository permissions** → **Secrets:** **Read and write**, and **Variables:** **Read and write**
-    <img width="822" height="614" alt="{CE160DBF-0A65-4465-918B-F97A1BDA1FFD}" src="https://github.com/user-attachments/assets/37ab20f9-12fe-4aa8-b528-85819a3aa88c" />
-
-3. Click **Generate token** and copy it. GitHub only shows it once
-    <img width="784" height="196" alt="{41D6FC52-D2F9-4B2B-AD9B-EF4D63B5AFFB}" src="https://github.com/user-attachments/assets/17eb710f-5ee7-4ca5-8b5c-5fd024a63455" />
-
-
-
-
-### Step 2: Add the secrets
-
-On **your fork**, go to **Settings** → **Secrets and variables** → **Actions** and add:
-
-
-| Secret name    | What to paste                                                     |
-| -------------- | ----------------------------------------------------------------- |
-| `GH_PAT`       | The personal access token from Step 1                             |
-| `PHONE_NUMBER` | The phone number on your Cidercade account, e.g. `(512) 555-0123` |
-
-
-
-
-### Step 3: Create the phone automation
-
-Follow the instructions for your phone.
-
-#### iPhone
-
-You may use this [Shortcut template](https://www.icloud.com/shortcuts/486ac665779d4ad8bf6dfc116fb99bfa) or create a shortcut manually as shown below
+Automations are a block at the top of a shortcut. You may work off this [Shortcut template](https://www.icloud.com/shortcuts/486ac665779d4ad8bf6dfc116fb99bfa) or create it manually:
 
 1. Open the **Shortcuts** app
-2. Tap **+** (or **New Automation**), press edit, and search for Automation "When I recieve a message where"
-3. Configure it where "Message" contains text `Your Cidercade verification code is:` and confirm
+2. Tap **+** at the bottom of your screen
+3. Tap **Edit** at the top right of your screen
+4. Tap **Automation**, then **Message**. The trigger is added as a block at the top of the shortcut
+
+5. On that block, tap `Sender`, replace it with `Message`, and set it to contain
+   ```plaintext
+   Your Cidercade verification code is:
+   ```
+6. Tap the arrow on the block and turn **Confirm Before Run** off
+7. Add the GitHub **Dispatch Workflow** action and fill in:
+
+| Field        | Value                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| Owner        | Your GitHub username (or whatever you set the owner as when you [created the fork](#step-1-fork-this-repo) e.g. dylan-dang)                                                             |
+| Workflow ID  | `authenticate.yml`                                                                                 |
+| Repository   | `cidercade-completer` (or your fork name when you [created the fork](#step-1-fork-this-repo))                                                                  |
+| Branch / ref | `master`                                                                                           |
+| Inputs       | `{"message":"[Message]"}` (where `[Message]` is the variable created from the previous automation) |
+| Account      | Your GitHub account selected |
+
+It should look something like this:
+
+![image](https://github.com/user-attachments/assets/ebd70b64-d683-4623-af5c-2ac1e11521fc)
+
+</details>
+
+<details>
+<summary>iOS 26 and earlier</summary>
+
+1. Open the **Shortcuts** app
+2. Tap the **Automation** tab, then **+** (or **New Automation**)
+3. Search for **Message** and select **When I receive a message**
+4. Set **Message Contains** to 
+   ```plaintext
+   Your Cidercade verification code is:
+   ```
+5. choose **Run Immediately**, and confirm
 
 Add the GitHub **Dispatch Workflow** action and fill in:
-
 
 | Field        | Value                                                                                              |
 | ------------ | -------------------------------------------------------------------------------------------------- |
@@ -197,19 +155,17 @@ Add the GitHub **Dispatch Workflow** action and fill in:
 | Workflow ID  | `authenticate.yml`                                                                                 |
 | Repository   | `cidercade-completer` (your fork)                                                                  |
 | Branch / ref | `master`                                                                                           |
-| Inputs       | `{"message":"[Message]"}` (where `[Message]` is the variable created from the previous automation) |
+| Inputs       | `{"message":"[Shortcut Input]"}` (for `[Shortcut Input]` press "Select Variable" when focused on the Input box) |
+| Account      | Your GitHub account selected |
 
+</details>
 
-It should look something like this:
-
-<img width="302" height="455" alt="image" src="https://github.com/user-attachments/assets/ebd70b64-d683-4623-af5c-2ac1e11521fc" />
-
-
-#### Android
+<details>
+<summary>Android</summary>
 
 Android has no GitHub app shortcut, so MacroDroid calls the GitHub API directly. It needs its own token that can only start workflows.
 
-1. Create a second [fine-grained token](https://github.com/settings/personal-access-tokens/new) the same way as [Step 1](#step-1-create-a-github-personal-access-token), except:
+1. Create a second [fine-grained token](https://github.com/settings/personal-access-tokens/new) the same way as [Step 3](#step-3-create-a-github-personal-access-token), except:
   - **Token name:** e.g. `cidercade-phone`
   - **Permissions** → **Repository permissions** → **Actions:** **Read and write** (no Secrets access)
 2. Open **MacroDroid** and tap **Add Macro**
@@ -229,21 +185,26 @@ Android has no GitHub app shortcut, so MacroDroid calls the GitHub API directly.
    `[sms_message]` is MacroDroid's placeholder for the text of the SMS. You can insert it from the **...** menu next to the body field.
 5. Name the macro (e.g. `Cidercade OTP`) and save it
 
+</details>
 
+</details>
 
-### Step 4: Get your first token
+> Prefer not to use a phone automation? When you get the verification text, open [**Actions** → **Authenticate Cidercade**](../../actions/workflows/authenticate.yml) → **Run workflow**, paste the text, and click **Run workflow**. Verification codes expire, so do this soon after the text arrives.
 
-If you skipped `TOKEN` earlier, run **Daily Cidercade** once (**Actions** tab → **Daily Cidercade** → **Run workflow**). It posts **Token Missing** to Discord and texts you a verification code. This run is marked as failed, which is expected.
+### Step 8: Run it for the first time
 
-Your phone automation picks up the text and runs **Authenticate Cidercade**. When that run has a green check in the **Actions** tab, your `TOKEN` secret is set and today's tasks are done.
+1. On the [**Actions**](../../actions) tab, select [**Daily Cidercade**](../../actions/workflows/daily.yml) in the left sidebar
+2. Click **Run workflow** → **Run workflow**
 
-If you already added `TOKEN`, there is nothing to do. The automation will take over the next time your token expires.
+Since there is no token yet, this run posts **Token Missing** to Discord, texts you a verification code, and is marked as failed. That is expected.
 
-> Prefer not to use a phone automation? When you get the verification text, open **Actions** → **Authenticate Cidercade** → **Run workflow**, paste the text, and click **Run workflow**. Verification codes expire, so do this soon after the text arrives.
+Your phone automation picks up the text and runs **Authenticate Cidercade**. When that run has a green check in the [**Actions**](../../actions) tab, your token is saved and today's tasks are done. Check Discord for the summary embed (if you set up a webhook).
+
+### That’s it
+
+**Daily Cidercade** now runs automatically every day. When your Cidercade token expires (about once a month), your phone will run **Authenticate Cidercade**.
 
 ---
-
-
 
 ## Free admission puzzles
 
@@ -258,38 +219,69 @@ Cidercade does not show overflowed puzzle pieces in their app or website. Theref
 cidercade-completer can help count overflowed puzzle pieces. Each run adds the admission pieces it earned and subtracts any you used since the last run (from your Cidercade activity history). The loot box summary in Discord then shows something like:
 
 > You have **9** admission puzzle pieces (**2** admissions)
-> 
+>
 > **25** pieces earned in total since tracking started
 
-Tracking is off unless you turn it on. Without `GH_PAT`, the count line is left out of the summary. To turn it on, add a `GH_PAT` secret with **Variables: Read and write** permission (see [Step 1 of automatic OTP token refresh](#step-1-create-a-github-personal-access-token)). The count is stored in a repository variable called `ADMISSION_PIECES`, under **Settings** → **Secrets and variables** → **Actions** → **Variables**. If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces.
+Tracking is on whenever the `GH_PAT` secret is set with **Variables: Read and write** permission, which the [recommended setup](#step-3-create-a-github-personal-access-token) already does. If you [enter your token manually](#entering-your-token-manually), you can still turn it on by creating a `GH_PAT` the same way. Without it, the count line is left out of the summary. The count is stored in a repository variable called `ADMISSION_PIECES`, under [**Settings** → **Secrets and variables** → **Actions** → **Variables**](../../settings/variables/actions). If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces.
 
 When running locally, the count is stored in `.admission-pieces.json` instead.
 
 ---
 
+## Entering your token manually (Not recommended)
 
+If you do not want to set up a phone automation, you can supply a Cidercade token yourself manually. However it will expires about once a month, so you will need to repeat this each time it does or else Cidercade completer will encounter authentication errors.
+
+> Treat your Cidercade token like a password. Anyone who has it can use your Cidercade account until it expires, so only paste it into your [fork's secrets](../../settings/secrets/actions).
+
+Follow Steps 1, 2, 5 and 6 above, then:
+
+### Get your Cidercade token
+
+1. Log in at [rewards.cidercade.com](https://rewards.cidercade.com)
+2. Press `F12` (or right-click → **Inspect**) to open developer tools
+3. Open the **Console** tab
+4. Paste this and press Enter. It finds your Cidercade token and copies its value to the clipboard:
+
+```js
+copy(document.cookie.match(/(^| )jwt=([^;]+)/)?.[2])
+```
+
+> Some browsers block pasting into the console the first time. If yours shows a warning, type `allow pasting` and press Enter, then paste again.
+
+### Add it as a secret
+
+On **your fork**, go to [**Settings** → **Secrets and variables** → **Actions**](../../settings/secrets/actions) and add a repository secret named `TOKEN` with your token as the value.
+
+### Run it once to test
+
+1. On the [**Actions**](../../actions) tab, select [**Daily Cidercade**](../../actions/workflows/daily.yml) in the left sidebar
+2. Click **Run workflow** → **Run workflow**
+3. Wait for the run to finish
+
+If there is a green check, the script succeeded and will now run every day. When runs start failing with auth errors, get a fresh token the same way and update the `TOKEN` secret.
+
+---
 
 ## Troubleshooting
 
 
-| Problem                                  | What to try                                                                                                                            |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Auth / 401 errors                        | Refresh your `TOKEN` secret with a new value from the browser, or run **Authenticate Cidercade** if you set up automatic token refresh |
-| Authenticate fails saving the secret     | Check that `GH_PAT` is set, has **Secrets: Read and write**, and has not expired                                                       |
-| "Could not update admission piece count" | Check that `GH_PAT` is set and has **Variables: Read and write**                                                                       |
-| No Discord message                       | Confirm `DISCORD_WEBHOOK_URL` is set, or check the Actions log                                                                         |
-| Scheduled runs stopped after ~2 months   | Confirm **Read and write permissions** (Step 5) so keep-alive can work                                                                 |
-
-
-> Free-tier scheduled workflows can be a few minutes late. That is normal.
+| Problem                                                          | What to try                                                                                                                                                                      |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Auth / 401 errors                                                | Check that your phone automation ran **Authenticate Cidercade** after the verification text. If you enter your token manually, replace `TOKEN` with a fresh one from the browser |
+| No verification text after **Token Missing** / **Token Expired** | Check that `PHONE_NUMBER` matches the number on your Cidercade account                                                                                                           |
+| Authenticate fails saving the secret                             | Check that `GH_PAT` is set, has **Secrets: Read and write**, and has not expired                                                                                                 |
+| "Could not update admission piece count"                         | Check that `GH_PAT` is set and has **Variables: Read and write**                                                                                                                 |
+| No Discord message                                               | Confirm `DISCORD_WEBHOOK_URL` is set, or check the [Actions log](../../actions)                                                                                                  |
+| Scheduled runs stopped after ~2 months                           | Confirm [**Read and write permissions**](../../settings/actions) (Step 5) so the daily workflow's keep-alive step can commit                                                      |
 
 ---
 
-
-
 ## Running locally
 
+Most people should use [GitHub Actions](#running-using-github-actions-recommended) instead. If you would rather run it on your own computer:
 
+**Show local setup**
 
 ### Requirements
 
@@ -297,20 +289,18 @@ When running locally, the count is stored in `.admission-pieces.json` instead.
 - A [Cidercade Rewards](https://rewards.cidercade.com) account
 - (Optional) A Discord server where you can create a webhook
 
-
-
 ### Setup
 
 ```bash
 git clone https://github.com/dylan-dang/cidercade-completer.git
-cd cidercade-clent
+cd cidercade-completer
 bun install
 ```
 
-Create a `.env` file in the project root or set up environment variables from within your shell:
+Create a `.env` file in the project root or set up environment variables from within your shell. `TOKEN` is your Cidercade token, which you can copy by following [Get your Cidercade token](#get-your-cidercade-token):
 
 ```env
-TOKEN=your_api_token
+TOKEN=your_cidercade_token
 DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ```
 
@@ -338,8 +328,6 @@ For example, with a cron job you might add:
 Or on Windows, you can create a scheduled task to run `bun start` daily at a specific time.
 
 ---
-
-
 
 ## Disclaimer
 
