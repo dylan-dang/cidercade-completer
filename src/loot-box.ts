@@ -2,6 +2,7 @@ import { postEndUsers } from ".";
 import {
   type AdmissionPieceState,
   PIECES_PER_ADMISSION,
+  readUnsetAdmissionBase,
   updateAdmissionPieces,
 } from "./admission-tracker";
 import { formatError, type Task } from "./task";
@@ -149,9 +150,15 @@ function formatLootRewardSummary({ outcomes, admissionPieces }: LootBoxResult) {
   return sections.length > 0 ? sections.join("\n\n") : undefined;
 }
 
-async function trackAdmissionPieces(outcomes: LootBoxRewardResponse[]) {
+async function trackAdmissionPieces(
+  outcomes: LootBoxRewardResponse[],
+  unsetBase: number,
+) {
   try {
-    return await updateAdmissionPieces(outcomes.filter(isAdmissionPiece).length);
+    return await updateAdmissionPieces(
+      outcomes.filter(isAdmissionPiece).length,
+      unsetBase,
+    );
   } catch (error) {
     const message = formatError(error);
     console.error(`[Admission pieces] ${message}`);
@@ -163,10 +170,19 @@ export const lootBoxTask: Task<LootBoxResult> = {
   name: "Loot Boxes",
   async run() {
     await Bun.sleep(LOOT_BOX_SETTLE_DELAY_MS);
+    let unsetBase = 0;
+    try {
+      unsetBase = await readUnsetAdmissionBase();
+    } catch (error) {
+      console.error(`[Admission pieces] ${formatError(error)}`);
+    }
     const outcomes = await redeemAllLootBoxes(() =>
       postEndUsers<LootBoxRewardResponse>(LOOT_BOX_PATH),
     );
-    return { outcomes, admissionPieces: await trackAdmissionPieces(outcomes) };
+    return {
+      outcomes,
+      admissionPieces: await trackAdmissionPieces(outcomes, unsetBase),
+    };
   },
   formatSummary: formatLootRewardSummary,
 };

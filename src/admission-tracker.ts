@@ -129,15 +129,35 @@ async function countPiecesConsumedSince(since: number) {
   ).length;
 }
 
+type StartedPuzzle = {
+  name: string;
+  pieces: { is_complete: boolean }[];
+};
+
+/** Pieces already placed on the in-progress puzzle, before this run's loot boxes. */
+export async function readUnsetAdmissionBase() {
+  const store = getStateStore();
+  if (!store || (await store.load())) return 0;
+
+  const { puzzles } = await getEndUsers<{ puzzles: StartedPuzzle[] }>(
+    "puzzles?started=true",
+  );
+  const admission = puzzles.find((puzzle) => /admission/i.test(puzzle.name));
+  const complete =
+    admission?.pieces.filter((piece) => piece.is_complete).length ?? 0;
+  // A full puzzle is claimable, not leftover inventory, and 0 means nothing started.
+  return complete >= 1 && complete < PIECES_PER_ADMISSION ? complete : 0;
+}
+
 /** Resolves to `undefined` when tracking is not enabled. */
-export async function updateAdmissionPieces(earned: number) {
+export async function updateAdmissionPieces(earned: number, unsetBase = 0) {
   const store = getStateStore();
   if (!store) return undefined;
 
   const saved = await store.load();
   const checkedAt = Math.floor(Date.now() / 1000);
 
-  let count = earned;
+  let count = unsetBase + earned;
   let totalEarned = earned;
   if (saved) {
     const previous = parseState(saved);
