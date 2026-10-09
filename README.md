@@ -1,4 +1,4 @@
-# cidercade-completer
+# Cidercade Completer
 
 Automatically completes your daily [Cidercade Rewards](https://rewards.cidercade.com) tasks and posts a summary to Discord.
 
