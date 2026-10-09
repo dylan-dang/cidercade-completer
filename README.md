@@ -1,4 +1,4 @@
-# Cidercade Completer
+# cidercade-completer
 
 Automatically completes your daily [Cidercade Rewards](https://rewards.cidercade.com) tasks and posts a summary to Discord.
 
@@ -15,7 +15,7 @@ Each day it:
 
 ## Running using GitHub Actions (recommended)
 
-This is the easiest way to setup cidercade completer and you do not need to install anything on your computer. GitHub will run the script for you every day.
+This is the best way to setup cidercade-completer and you do not need to install anything on your computer. GitHub will run the script for you every day.
 
 ### What you need
 
@@ -49,7 +49,7 @@ Skip this if you do not want Discord notifications.
 
 ### Step 3: Create a GitHub personal access token
 
-This lets cidercade completer update its secrets and variables.
+This lets cidercade-completer update its secrets and variables.
 
 1. Go to [Settings → Developer settings → Fine-grained tokens → Generate new token](https://github.com/settings/personal-access-tokens/new)
 2. Fill in:
@@ -217,21 +217,20 @@ Free admission puzzles are **not** claimed automatically when they are completed
 
 ![Claiming puzzle pieces](https://github.com/user-attachments/assets/df6cbe53-75ee-4ec7-9878-e502973d9699)
 
-Cidercade does not show overflowed puzzle pieces in their app or website, so cidercade-completer can help you count overflowed puzzle pieces.
+Cidercade does not show overflowed admission puzzle pieces in their app or website, so cidercade-completer helps you count overflowed puzzle pieces.
 Each run will add to a running total of admission pieces earned and subtracts any you used since the last run (from your Cidercade activity history) and log it in your discord embed summaries.
 
-However, it won't be able to see any pieces earned before tracking started. So you may need to update the count if you already had overflowed pieces, e.g. by running an older version of cidercade completer before piece counting was implemented.
+On your first run, cidercade-completer will seed your starting amount of incomplete pieces. However, it won't be able to see any overflowed pieces earned before tracking started, so you may need to update the count if you already had overflowed pieces (e.g. by running an older version of cidercade-completer before piece counting was implemented). Additionally, cidercade-completer will not be able see any pieces not earned by cidercade-completer, so please update your count if that occurs.
 
 The count is stored in a repository variable called `ADMISSION_PIECES`, under [**Settings** → **Secrets and variables** → **Actions** → **Variables**](../../settings/variables/actions). If you know your real count, you can edit the `count` value there. `totalEarned` is the running total and never goes down when you use pieces.
-When running locally, the count is stored in `.admission-pieces.json` instead.
 
-> When using Github Actions, tracking will only whenever the `GH_PAT` secret is set with **Variables: Read and write** permission. Without it, the count line is left out of the summary.
+> When using Github Actions, tracking will only be enabled whenever the `GH_PAT` secret is set with **Variables: Read and write** permission. Without it, the count line is left out of the summary. When running locally, the count is stored in `.admission-pieces.json` instead.
 
 ---
 
 ## Entering your token manually (Not recommended)
 
-If you do not want to set up a phone automation, you can supply a Cidercade token yourself manually. However it will expires about once a month, so you will need to repeat this each time it does or else Cidercade completer will encounter authentication errors.
+If you do not want to set up a phone automation, you can supply a Cidercade token yourself manually. However it will expires about once a month, so you will need to repeat this each time it does or else cidercade-completer will encounter authentication errors.
 
 > Treat your Cidercade token like a password. Anyone who has it can use your Cidercade account until it expires, so only paste it into your [fork's secrets](../../settings/secrets/actions).
 
