@@ -32,7 +32,7 @@ This is the easiest way to setup cidercade completer and you do not need to inst
 1. On the top right of the repository page click "Fork" or [click here to go to the fork page directly](https://github.com/dylan-dang/cidercade-completer/fork)
 2. Keep the defaults, choosing an owner if necessary, and click **Create fork**
 
-You now have your own copy of the project.
+You now have your own copy of the project. Proceed by using the README on your fork so that links to your fork settings will work properly.
 
 ### Step 2: Create a Discord webhook
 
